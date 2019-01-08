@@ -1,0 +1,25 @@
+
+e
+5app/src/main/res/layout/activity_user_detail_page.xml,e\7\e7944c3cbe4b208385dce7434bf8ca454d3a9f0b
+z
+Japp/src/main/java/distance/com/tms/distancemeasurement/UserDetailPage.java,a\b\abe373f33c5b570f0e854f377110c2466eeed036
+x
+Happ/src/main/java/distance/com/tms/distancemeasurement/StepDetector.java,b\b\bb052d05a4974b8cc05270da716c34b08a16284f
+T
+$app/src/main/res/menu/right_menu.xml,4\5\4533bd2495bd451878e7b341544ce0a2d95dc5b1
+Y
+)app/src/main/res/layout/activity_main.xml,7\6\76b07e40f24cce093536731477540f12e7da3cb6
+P
+ app/src/main/res/layout/test.xml,3\5\35b61ec42f6af441f724d53a94a4e612be72ac0e
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+x
+Happ/src/main/java/distance/com/tms/distancemeasurement/MainActivity.java,a\d\add83ec3ffb1f6d0c881c4e96c7478d744946d09
+R
+"app/src/main/res/values/styles.xml,f\7\f79cc2688e29fcbc286fda14ae07b27c9e83690f
+R
+"app/src/main/res/values/colors.xml,9\6\969faa2a5d9f5e8390e958d2c07f2cfd54676e6b
+S
+#app/src/main/res/values/strings.xml,d\2\d2281fbb3027de2722081a53408dd77628bf080e
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
