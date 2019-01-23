@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<item android:id="@+id/edit_detail"
-    android:title="Edit Details"
-    app:showAsAction="never"/>
+
+    <item android:id="@+id/edit_detail"
+        android:title="@string/edit_details"
+        app:showAsAction="never"/>
+    <item android:id="@+id/past_records"
+        android:title="@string/records"
+        app:showAsAction="never"/>
 
 </menu>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DistanceMeasurement</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="records">Records</string>
 </resources>

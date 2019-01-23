@@ -1,4 +1,4 @@
-package distance.com.tms.distancemeasurement;
+package distance.com.tms.distancemeasurement.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,24 +7,24 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.datatype.Duration;
+import distance.com.tms.distancemeasurement.POJO_Class.RecordDto;
+import distance.com.tms.distancemeasurement.R;
+import distance.com.tms.distancemeasurement.db.DBHelper;
+import distance.com.tms.distancemeasurement.utils.StepDetector;
+import distance.com.tms.distancemeasurement.utils.StepListener;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener,StepListener {
     private TextView txtSteps;
@@ -44,12 +44,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     SharedPreferences preferences;
     float distance;
     TextView calorieBurnText;
+    String userName;
+    Float caloriesBurn;
+    DBHelper dbHelper=new DBHelper(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences=PreferenceManager.getDefaultSharedPreferences(this);
+        userName=preferences.getString("userName","");
         getDetails();
 
         // Get an instance of the SensorManager
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     sensorManager.unregisterListener(MainActivity.this);
                     String durationStr=String.valueOf(startTime);
                     Float timeInDuration=Float.parseFloat(durationStr)/3600000;
-                    Float caloriesBurn=getCaloriesBurn(height,age,weight,gender,timeInDuration,distance);
+                    caloriesBurn=getCaloriesBurn(height,age,weight,gender,timeInDuration,distance);
                     calorieBurnText.setText("Congratulation you burn "+String.valueOf(caloriesBurn)+ " calories");
 
                 }
@@ -90,10 +94,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 if(btnStart.getText().toString().equalsIgnoreCase("stop")){
                     Toast.makeText(MainActivity.this,"First you should stop the counting...",Toast.LENGTH_LONG).show();
                 }else if(btnStart.getText().toString().equalsIgnoreCase("start")){
+                   boolean i= dbHelper.insertMessage(userName,String.valueOf(distance),String.valueOf(numSteps),String.valueOf(caloriesBurn));
+                   System.out.println("insert"+i);
                     numSteps=0;
                     distanceTxt.setText("Ready to count your distance");
                     txtSteps.setText("");
                     calorieBurnText.setText("");
+
+
                 }
 
             }
@@ -219,8 +227,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
      //   preferences.edit().clear().apply();
-        startActivity(new Intent(MainActivity.this,UserDetailPage.class));
-        finish();
+
+        switch (item.getItemId()){
+            case R.id.edit_detail:
+                Intent intent=new Intent(MainActivity.this,UserDetailPage.class);
+                intent.putExtra("flag",1);
+                startActivity(intent);
+                finish();
+                return false;
+
+            case R.id.past_records:
+                /*List<RecordDto> recordDtos=new ArrayList<>();
+                recordDtos=dbHelper.getAllMessages(userName);
+                for(RecordDto dto:recordDtos){
+                    System.out.println("user detail record"+dto.getDistance()+","+dto.getCaloriesBurn()+","+dto.getSteps()+","+dto.getFullName());
+
+                }*/
+
+                Intent i=new Intent(MainActivity.this,RecordsPage.class);
+                startActivity(i);
+                return false;
+        }
         return true;
 
     }

@@ -1,4 +1,4 @@
-package distance.com.tms.distancemeasurement;
+package distance.com.tms.distancemeasurement.activity;
 
 
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import distance.com.tms.distancemeasurement.R;
+
 public class UserDetailPage extends AppCompatActivity {
     Spinner genderSpinner;
     String[] gender=new String[]{"male","female","transgender"};
@@ -24,6 +26,8 @@ public class UserDetailPage extends AppCompatActivity {
     TextInputLayout weightLayout;
     EditText ageEd;
     TextInputLayout ageLayout;
+    EditText fullNameEd;
+    TextInputLayout fullNameLayout;
     Button saveDetailBtn;
     SharedPreferences preferences;
     @Override
@@ -31,7 +35,14 @@ public class UserDetailPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail_page);
         preferences= PreferenceManager.getDefaultSharedPreferences(this);
-        checkPreference();
+        if(getIntent()!=null){
+            if(getIntent().getIntExtra("flag",0)!=1){
+                checkPreference();
+            }
+        }else{
+            checkPreference();
+        }
+
         initialize();
     }
 
@@ -51,6 +62,8 @@ public class UserDetailPage extends AppCompatActivity {
         ageEd=findViewById(R.id.age_edittext);
         ageLayout=findViewById(R.id.age_ed_layout);
         saveDetailBtn=findViewById(R.id.save_detail_btn);
+        fullNameEd=findViewById(R.id.name_edittext);
+        fullNameLayout=findViewById(R.id.name_ed_layout);
         ArrayAdapter genderAdapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,gender);
         genderSpinner.setAdapter(genderAdapter);
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -73,11 +86,12 @@ public class UserDetailPage extends AppCompatActivity {
             public void onClick(View view) {
                 if(!heightEd.getText().toString().equals("")&&!weightEd.getText().toString().equals("")&&!ageEd.getText().toString().equals("")){
                    SharedPreferences.Editor editor= preferences.edit();
-                   editor.putString("height",heightEd.getText().toString());
-                   editor.putString("weight",weightEd.getText().toString());
-                   editor.putString("age",ageEd.getText().toString());
-                   editor.putString("gender",genderSpinner.getSelectedItem().toString());
+                   editor.putString("height",heightEd.getText().toString().trim());
+                   editor.putString("weight",weightEd.getText().toString().trim());
+                   editor.putString("age",ageEd.getText().toString().trim());
+                   editor.putString("gender",genderSpinner.getSelectedItem().toString().trim());
                    editor.putString("multiplyFactor",String.valueOf(multiplyFactor));
+                   editor.putString("userName",fullNameEd.getText().toString().trim());
                    editor.apply();
                    startActivity(new Intent(UserDetailPage.this,MainActivity.class));
                    finish();

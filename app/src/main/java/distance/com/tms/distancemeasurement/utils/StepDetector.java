@@ -1,4 +1,4 @@
-package distance.com.tms.distancemeasurement;
+package distance.com.tms.distancemeasurement.utils;
 
 public class StepDetector {
     private static final int ACCEL_RING_SIZE = 50;
